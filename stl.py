@@ -2,6 +2,7 @@
 STL module
 """
 import struct
+from math import fabs
 
 class Triangle:
     """
@@ -46,3 +47,20 @@ class STL:
                 triangle.vertices = (vertex1, vertex2, vertex3)
                 triangle.attribute = struct.unpack('h', stl.read(2))[0]
                 self.triangles.append(triangle)
+
+    def dimensions(self):
+        """
+        Determine le maximum et le minimum en x, y, z des coordonnees des triangles
+        Renvoie la taille de l'objet en x, y, z et le z de depart du decoupage
+        """
+        maximums = [- float("inf"), - float("inf"), - float("inf")]
+        minimums = [float("inf"), float("inf"), float("inf")]
+        for triangle in self.triangles:
+            for point in triangle.vertices:
+                for index in range(3):
+                    if point[index] > maximums[index]:
+                        maximums[index] = point[index]
+                    if point[index] < minimums[index]:
+                        minimums[index] = point[index]
+        dimension = [fabs(maximum) + fabs(minimum) for maximum, minimum in zip(maximums, minimums)]
+        return dimension, minimums[2]
