@@ -7,6 +7,7 @@ Module principal pour la découpe de modele 3D
 import argparse
 import itertools
 from stl import STL
+from svg import SVG
 
 def segment_intersects_slice(point0, point1, z_slice):
     """
@@ -44,19 +45,20 @@ def intersection(triangle, z_slice):
             points.append(calcul_intersection(couple[0], couple[1], parameter))
     return points
 
-def generate_slice(stl, z_slice):
+def generate_slice(stl, z_slice, svg):
     """
     generation d'un tranche
     """
     for triangle in stl.triangles:
         points = intersection(triangle, z_slice)
         if points != []:
-            print(points) #temp
+            # print(points) #temp
         # if len(points) == 1:
             # svg.point(filename, point[0])
         # elif len(points) >= 2:
-            # for couple in itertools.combinations(points, 2):
-                # svg.segment(filename, points[0], points[1])
+            for couple in itertools.combinations(points, 2):
+                # svg.segment(filename, points[0], points[1])
+                svg.add_line(points[0], points[1])
 
 
 def main():
@@ -78,8 +80,10 @@ def main():
         z_slice = z_start + height*index
         filename = "slice{}.svg".format(index)
         # svg.head(filename, dimension[0], dimension[1])
-        generate_slice(stl, z_slice)
+        svg = SVG(dimension[0], dimension[1])
+        generate_slice(stl, z_slice, svg)
         # svg.tail(filename)
+        svg.save(filename)
 
 if __name__ == "__main__":
     main()
