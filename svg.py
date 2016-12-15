@@ -14,12 +14,9 @@ class SVG:
     def save(self, filename):
         with open(filename, "w") as fsave:
             fsave.write(self.head)
-            print(self.head)
             for svg in self.svgs:
                 fsave.write(svg)
-                print(svg)
             fsave.write(self.tail)
-            print(self.tail)
 
     def add_line(self, point1, point2, couleur="rgb(255,0,0)", stroke_width=2):
         self.svgs.append("""<line x1="{}" y1="{}" x2="{}" y2="{}" style="color:{};stroke-width:{}" />""".
