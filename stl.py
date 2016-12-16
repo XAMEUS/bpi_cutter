@@ -63,5 +63,5 @@ class STL:
                         maximums[index] = point[index]
                     if point[index] < minimums[index]:
                         minimums[index] = point[index]
-        dimension = [fabs(maximum) + fabs(minimum) for maximum, minimum in zip(maximums, minimums)]
+        dimension = [maximum + fabs(minimum) for maximum, minimum in zip(maximums, minimums)]
         return dimension, minimums
