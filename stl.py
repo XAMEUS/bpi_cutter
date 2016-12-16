@@ -1,10 +1,11 @@
 """
 STL module
 """
+
 import struct
 from math import fabs
 
-class Triangle:
+class Triangle: #pylint: disable=too-few-public-methods
     """
     STL Triangle
     REAL32[3] – Normal vector
@@ -31,7 +32,7 @@ class STL:
 
     def load(self, filename):
         """
-        :param filename: the file's name
+        Charge le fichier STL
         """
         self.triangles = []
         self.header = ""
@@ -51,7 +52,7 @@ class STL:
     def dimensions(self):
         """
         Determine le maximum et le minimum en x, y, z des coordonnees des triangles
-        Renvoie la taille de l'objet en x, y, z et le z de depart du decoupage
+        Renvoie la taille de l'objet et les coordonnees de l'origine
         """
         maximums = [- float("inf"), - float("inf"), - float("inf")]
         minimums = [float("inf"), float("inf"), float("inf")]
@@ -63,4 +64,4 @@ class STL:
                     if point[index] < minimums[index]:
                         minimums[index] = point[index]
         dimension = [fabs(maximum) + fabs(minimum) for maximum, minimum in zip(maximums, minimums)]
-        return dimension, minimums[2]
+        return dimension, minimums
