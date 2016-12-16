@@ -80,8 +80,8 @@ def main():
     parser.add_argument("stl_file", help="name of the binary STL file to slice")
     parser.add_argument("-s", "--slices", type=int, dest="SLICES", default=4,
                         help="how many slices you want (default is 4)")
-    parser.add_argument("-g", "--grow", type=int, dest="SCALE", default=100,
-                        help="scale up or down the slices (default is scale up by 100)")
+    parser.add_argument("-g", "--grow", type=int, dest="SCALE", default=1,
+                        help="scale up or down the slices (default is 1)")
     args = parser.parse_args()
 
     stl = STL()
@@ -95,7 +95,6 @@ def main():
         svg = SVG(dimension[0]*args.SCALE, dimension[1]*args.SCALE)
         generate_slice(stl, z_slice, svg, origins, args.SCALE)
         svg.save(filename)
-
 
 if __name__ == "__main__":
     main()
